@@ -26,7 +26,6 @@ Track It is a Node.js/Express backend for tracking company onboarding to SokoFun
 8. [Available API Endpoints](#available-api-endpoints)
 9. [Security Considerations](#security-considerations)
 10. [Development Workflow](#development-workflow)
-11. [Tips for Collaborators](#tips-for-collaborators)
 
 ---
 
@@ -561,11 +560,6 @@ git push
 
 ----------
 
-## Tips for Collaborators
-
--   Always pull the latest code before making changes (`git pull origin main`).
-    
--   Follow consistent naming conventions for database tables and fields.
     
 -   Write clear, descriptive commit messages.
     
