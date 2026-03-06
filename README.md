@@ -1,26 +1,51 @@
-Track It Backend
-Prerequisites
+# Track It Backend
+
+**Track It** is a Node.js/Express backend for tracking company onboarding to SokoFund. This backend includes:
+
+- User authentication (JWT, admin-only access)
+- Company management (CRUD)
+- Onboarding workflow tracking (`unstarted`, `pending`, `on hold`, `done`)
+- Messaging between admins
+- Admin-only account management
+- PostgreSQL database integration
+
+---
+
+## Table of Contents
+
+1. [Prerequisites](#prerequisites)
+2. [Clone the repository](#clone-the-repository)
+3. [Install dependencies](#install-dependencies)
+4. [Set up PostgreSQL](#set-up-postgresql)
+5. [Environment variables](#environment-variables)
+6. [Database setup](#database-setup)
+7. [Run the backend](#run-the-backend)
+8. [Available API endpoints](#available-api-endpoints)
+9. [Security considerations](#security-considerations)
+10. [Development workflow](#development-workflow)
+
+---
+
+## Prerequisites
 
 Before starting, ensure you have installed:
 
-Node.js (v18+ recommended)
+- Node.js (v18+ recommended)
+- npm (comes with Node.js)
+- PostgreSQL (v14+ recommended)
+- Optional: Postman or Insomnia for testing APIs
 
-npm (comes with Node.js)
+---
 
-PostgreSQL (v14+ recommended)
+## Clone the repository
 
-Optional: Postman or Insomnia for testing APIs
-
-Clone the repository
-
-In your terminal:
-
+```bash
 git clone https://github.com/davy-mgr/track-it-backend.git
 cd track-it-backend
 Install dependencies
 npm install
 
-This installs all required packages, including:
+Installs required packages including:
 
 express → Web framework
 
@@ -36,7 +61,7 @@ nodemon → Development auto-reload
 
 Set up PostgreSQL
 
-Install PostgreSQL using https://www.postgresql.org/download/
+Install PostgreSQL: https://www.postgresql.org/download/
 
 Open pgAdmin or psql
 
@@ -44,8 +69,9 @@ Create a database:
 
 CREATE DATABASE track_it;
 
-Create tables. Example for Users:
+Create tables:
 
+-- Users
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   first_name VARCHAR(50),
@@ -60,6 +86,7 @@ CREATE TABLE users (
   updated_at TIMESTAMP
 );
 
+-- Companies
 CREATE TABLE companies (
   id SERIAL PRIMARY KEY,
   company_name VARCHAR(100) NOT NULL,
@@ -75,6 +102,7 @@ CREATE TABLE companies (
   updated_at TIMESTAMP
 );
 
+-- Onboarding
 CREATE TABLE onboarding (
   onboarding_id SERIAL PRIMARY KEY,
   company_id INT REFERENCES companies(id) ON DELETE CASCADE,
@@ -85,6 +113,7 @@ CREATE TABLE onboarding (
   updated_at TIMESTAMP
 );
 
+-- Messaging
 CREATE TABLE messages (
   message_id SERIAL PRIMARY KEY,
   sender_id INT REFERENCES users(id) ON DELETE CASCADE,
@@ -95,7 +124,7 @@ CREATE TABLE messages (
 );
 Environment variables
 
-Create a .env file in the root of the project:
+Create a .env file in the root directory:
 
 PORT=5000
 DB_USER=postgres
@@ -109,17 +138,9 @@ Replace your_db_password with your PostgreSQL password
 
 Replace JWT_SECRET with a long, random secret for JWT
 
-Database setup
-
-Ensure PostgreSQL service is running
-
-Use pgAdmin or psql to connect to the database with credentials from .env
-
-Make sure tables are created as above
-
 Run the backend
 
-For development (auto-reload with nodemon):
+For development with auto-reload:
 
 npm run dev
 
@@ -155,34 +176,30 @@ POST	/messages	Admin	Send a message to another admin
 GET	/messages/:userId	Admin	Get messages for a user
 Security considerations
 
-Never commit .env to GitHub.
+Never commit .env to GitHub
 
-Use .gitignore to exclude node_modules/ and .env.
+Use .gitignore to exclude node_modules/ and .env
 
-Hash passwords with bcrypt.
+Hash passwords with bcrypt
 
-Protect all routes with JWT (authMiddleware).
+Protect routes with JWT (authMiddleware)
 
-Use adminOnly middleware for admin-only routes.
+Admin-only routes use adminOnly middleware
 
 Development workflow
 
-Start PostgreSQL
+Start PostgreSQL service
 
-Create .env from example and set credentials
+Create .env and fill in credentials
 
 Run npm install
 
 Start backend: npm run dev
 
-Use Postman or frontend to test endpoints
+Test endpoints via Postman or frontend
 
-Tips for collaborators
+Commit changes and push to GitHub:
 
-Copy .env.example to .env and fill in your credentials
-
-Run npm install to get dependencies
-
-Use JWT from login for protected endpoints: Authorization: Bearer <token>
-
-Admin accounts can manage users, companies, and onboarding
+git add .
+git commit -m "Update backend"
+git push
