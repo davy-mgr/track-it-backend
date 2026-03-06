@@ -1,3 +1,4 @@
+
 # Track It Backend
 
 Track It is a Node.js/Express backend for tracking company onboarding to SokoFund.
@@ -48,12 +49,10 @@ cd track-it-backend
 ----------
 
 ## Install Dependencies
-
-
-'''bash
-
+```bash 
 npm install
 
+```
 Core Packages:
 
     express: Web framework
@@ -80,7 +79,7 @@ Set Up PostgreSQL
 Environment Variables
 
 Create a .env file in the root directory:
-Code snippet
+```Code snippet
 
 PORT=5000
 DB_USER=postgres
@@ -89,14 +88,14 @@ DB_HOST=localhost
 DB_NAME=track_it
 DB_PORT=5432
 JWT_SECRET=your_super_secure_secret_here
-
+```
     Note: .env is ignored by git to keep your credentials safe.
 
 Database Setup
 
 Run these commands to initialize your tables:
 Users Table
-SQL
+```SQL
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
@@ -111,9 +110,9 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP
 );
-
+```
 Companies Table
-SQL
+```SQL
 
 CREATE TABLE companies (
   id SERIAL PRIMARY KEY,
@@ -129,9 +128,9 @@ CREATE TABLE companies (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP
 );
-
+```
 Onboarding & Messages
-SQL
+```SQL
 
 CREATE TABLE onboarding (
   onboarding_id SERIAL PRIMARY KEY,
@@ -151,9 +150,9 @@ CREATE TABLE messages (
   read BOOLEAN DEFAULT false,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
+```
 Available API Endpoints
-Authentication
+```Authentication
 Method	Endpoint	Access	Description
 POST	/users/signup	Public	Create new admin user
 POST	/users/login	Public	Login user, returns JWT
@@ -164,10 +163,11 @@ POST	/companies	Admin	Add new company
 PUT	/onboarding/:id	Admin	Update status/notes
 GET	/messages/:id	Admin	Get user messages
 Run the Backend
-Bash
+```
+```Bash
 
 npm run dev
-
+```
 Tips for Collaborators
 
     Always pull the latest code before starting work.
@@ -176,8 +176,6 @@ Tips for Collaborators
 
     Write clear commit messages.
 ## Install Dependencies
-
-Bash
 
 ```
 npm install
@@ -210,7 +208,7 @@ npm install
 3.  Create the database:
     
 
-SQL
+
 
 ```
 CREATE DATABASE track_it;
@@ -223,7 +221,7 @@ CREATE DATABASE track_it;
 
 Create a `.env` file in the root directory and add the following:
 
-Code snippet
+
 
 ```
 PORT=5000
@@ -251,8 +249,6 @@ Run the following SQL commands in your PostgreSQL environment to set up the nece
 
 ### Users Table
 
-SQL
-
 ```
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
@@ -271,8 +267,6 @@ CREATE TABLE users (
 ```
 
 ### Companies Table
-
-SQL
 
 ```
 CREATE TABLE companies (
@@ -294,8 +288,6 @@ CREATE TABLE companies (
 
 ### Onboarding Table
 
-SQL
-
 ```
 CREATE TABLE onboarding (
   onboarding_id SERIAL PRIMARY KEY,
@@ -310,8 +302,6 @@ CREATE TABLE onboarding (
 ```
 
 ### Messages Table
-
-SQL
 
 ```
 CREATE TABLE messages (
@@ -331,7 +321,6 @@ CREATE TABLE messages (
 
 Start the development server:
 
-Bash
 
 ```
 npm run dev
@@ -340,7 +329,6 @@ npm run dev
 
 **Expected output:**
 
-Plaintext
 
 ```
 PostgreSQL connected successfully
@@ -561,10 +549,8 @@ Export to Sheets
     
 5.  Test endpoints using Postman, Insomnia, or your frontend application.
     
-6.  Commit changes and push:
-    
+6.  Commit changes and push
 
-Bash
 
 ```
 git add .
