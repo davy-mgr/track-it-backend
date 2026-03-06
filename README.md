@@ -1,10 +1,12 @@
 # Track It Backend
 
-**Track It** is a Node.js/Express backend for tracking company onboarding to SokoFund. Features include:
+Track It is a Node.js/Express backend for tracking company onboarding to SokoFund.
+
+## Features
 
 - User authentication (JWT, admin-only access)
 - Company management (CRUD)
-- Onboarding workflow tracking (`unstarted`, `pending`, `on hold`, `done`)
+- Onboarding workflow tracking (unstarted, pending, on hold, done)
 - Messaging between admins
 - Admin-only account management
 - PostgreSQL database integration
@@ -29,50 +31,75 @@
 
 ## Prerequisites
 
-Before starting, ensure you have installed:
-
-- Node.js (v18+ recommended)
-- npm (comes with Node.js)
-- PostgreSQL (v14+ recommended)
-- Optional: Postman or Insomnia for API testing
+- **Node.js**: v18 or higher
+- **npm**: (comes with Node.js)
+- **PostgreSQL**: v14 or higher
+- **Optional**: Postman or Insomnia for API testing
 
 ---
 
 ## Clone the Repository
 
 ```bash
-git clone https://github.com/davy-mgr/track-it-backend.git
+git clone [https://github.com/davy-mgr/track-it-backend.git](https://github.com/davy-mgr/track-it-backend.git)
 cd track-it-backend
+
 Install Dependencies
+Bash
+
 npm install
 
-Installs the following packages:
+Packages used:
 
-express → Web framework
+    express: Web framework
 
-pg → PostgreSQL client
+    pg: PostgreSQL client
 
-bcrypt → Password hashing
+    bcrypt: Password hashing
 
-jsonwebtoken → JWT authentication
+    jsonwebtoken: JWT authentication
 
-dotenv → Environment variable management
+    dotenv: Environment variable management
 
-nodemon → Development auto-reload
+    nodemon: Development auto-reload
 
 Set Up PostgreSQL
 
-Install PostgreSQL from https://www.postgresql.org/download/
+    Install PostgreSQL from the official website.
 
-Open pgAdmin or psql.
+    Open pgAdmin or psql in your terminal.
 
-Create a database:
+    Create the database:
+
+SQL
 
 CREATE DATABASE track_it;
 
-Create the required tables:
+Environment Variables
 
--- Users table
+Create a .env file in the root directory and add the following:
+Code snippet
+
+PORT=5000
+DB_USER=postgres
+DB_PASSWORD=your_db_password
+DB_HOST=localhost
+DB_NAME=track_it
+DB_PORT=5432
+JWT_SECRET=your_super_secure_secret_here
+
+    Note: > - Replace your_db_password with your PostgreSQL password.
+
+        Replace JWT_SECRET with a long, random string.
+
+        Never commit your .env file to GitHub.
+
+Database Setup
+
+Run the following SQL commands in your PostgreSQL environment to set up the necessary tables.
+Users Table
+SQL
+
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   first_name VARCHAR(50),
@@ -87,7 +114,9 @@ CREATE TABLE users (
   updated_at TIMESTAMP
 );
 
--- Companies table
+Companies Table
+SQL
+
 CREATE TABLE companies (
   id SERIAL PRIMARY KEY,
   company_name VARCHAR(100) NOT NULL,
@@ -103,7 +132,9 @@ CREATE TABLE companies (
   updated_at TIMESTAMP
 );
 
--- Onboarding table
+Onboarding Table
+SQL
+
 CREATE TABLE onboarding (
   onboarding_id SERIAL PRIMARY KEY,
   company_id INT REFERENCES companies(id) ON DELETE CASCADE,
@@ -114,7 +145,9 @@ CREATE TABLE onboarding (
   updated_at TIMESTAMP
 );
 
--- Messages table
+Messages Table
+SQL
+
 CREATE TABLE messages (
   message_id SERIAL PRIMARY KEY,
   sender_id INT REFERENCES users(id) ON DELETE CASCADE,
@@ -123,36 +156,20 @@ CREATE TABLE messages (
   read BOOLEAN DEFAULT false,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-Environment Variables
-
-Create a .env file in the root directory:
-
-PORT=5000
-DB_USER=postgres
-DB_PASSWORD=your_db_password
-DB_HOST=localhost
-DB_NAME=track_it
-DB_PORT=5432
-JWT_SECRET=your_super_secure_secret_here
-
-Notes:
-
-Replace your_db_password with your PostgreSQL password.
-
-Replace JWT_SECRET with a long, random string (used for JWT authentication).
-
-.env is never committed to GitHub for security.
 
 Run the Backend
 
-For development with auto-reload:
+Start the development server:
+Bash
 
 npm run dev
 
 Expected output:
+Plaintext
 
 PostgreSQL connected successfully
 Track It Backend running on port 5000
+
 Available API Endpoints
 Authentication
 Method	Endpoint	Access	Description
@@ -173,7 +190,7 @@ Onboarding Workflow
 Method	Endpoint	Access	Description
 POST	/onboarding	Admin	Create onboarding record
 GET	/onboarding	Admin	List all onboarding records
-PUT	/onboarding/:id	Admin	Update status/assigned admin/notes
+PUT	/onboarding/:id	Admin	Update status, assigned admin, or notes
 DELETE	/onboarding/:id	Admin	Delete onboarding record
 Messaging (Admins)
 Method	Endpoint	Access	Description
@@ -181,30 +198,42 @@ POST	/messages	Admin	Send a message to another admin
 GET	/messages/:userId	Admin	Get messages for a user
 Security Considerations
 
-Never commit .env to GitHub
+    Never commit .env to GitHub.
 
-Use .gitignore to exclude node_modules/ and .env
+    Use .gitignore to exclude node_modules/ and .env.
 
-Hash passwords with bcrypt
+    Hash passwords with bcrypt.
 
-Protect routes with JWT (authMiddleware)
+    Protect routes with JWT (authMiddleware).
 
-Admin-only routes use adminOnly middleware
+    Admin-only routes use adminOnly middleware.
 
 Development Workflow
 
-Start PostgreSQL service
+    Start your PostgreSQL service.
 
-Create .env with credentials
+    Create your .env file with credentials.
 
-Run npm install
+    Run npm install.
 
-Start backend: npm run dev
+    Start backend with npm run dev.
 
-Test endpoints using Postman, Insomnia, or frontend
+    Test endpoints using Postman, Insomnia, or your frontend application.
 
-Commit changes and push:
+    Commit changes and push:
+
+Bash
 
 git add .
 git commit -m "Update backend"
 git push
+
+Tips for Collaborators
+
+    Always pull the latest code before making changes (git pull origin main).
+
+    Follow consistent naming conventions for database tables and fields.
+
+    Write clear, descriptive commit messages.
+
+    Use nodemon for automatic server reload during development.
