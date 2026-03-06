@@ -1,0 +1,68 @@
+### 0️⃣ Clear old test data (optional, for clean testing)
+DELETE http://localhost:5000/testing/clear
+Content-Type: application/json
+
+###
+
+### 1️⃣ Create a new user
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+  "name": "Admin User",
+  "email": "admin@trackit.com",
+  "password": "admin123",
+  "role": "admin"
+}
+
+###
+
+### 2️⃣ Create a new company
+POST http://localhost:5000/companies
+Content-Type: application/json
+
+{
+  "company_name": "Acme Ltd",
+  "industry": "Fintech",
+  "country": "Rwanda",
+  "company_size": "50-100",
+  "website": "https://acme.com",
+  "contact_person": "John Doe",
+  "contact_email": "john@acme.com",
+  "contact_phone": "+250788123456"
+}
+
+###
+
+### 3️⃣ Assign a new onboarding
+POST http://localhost:5000/onboarding
+Content-Type: application/json
+
+{
+  "company_id": 1,
+  "assigned_to": 1,
+  "status": "contacted",
+  "notes": "Reached out via email"
+}
+
+###
+
+### 4️⃣ Update the onboarding record
+PUT http://localhost:5000/onboarding/7
+Content-Type: application/json
+
+{
+  "status": "in_progress",
+  "assigned_to": 1,
+  "notes": "Followed up via phone"
+}
+
+###
+
+### 5️⃣ Get all onboarding records
+GET http://localhost:5000/onboarding
+
+###
+
+### 6️⃣ Get dashboard
+GET http://localhost:5000/dashboard
