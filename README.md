@@ -40,16 +40,12 @@ Track It is a Node.js/Express backend for tracking company onboarding to SokoFun
 
 ## Clone the Repository
 
-```bash
-git clone [https://github.com/davy-mgr/track-it-backend.git](https://github.com/davy-mgr/track-it-backend.git)
-cd track-it-backend
-
 Install Dependencies
 Bash
 
 npm install
 
-Packages used:
+Core Packages:
 
     express: Web framework
 
@@ -65,19 +61,16 @@ Packages used:
 
 Set Up PostgreSQL
 
-    Install PostgreSQL from the official website.
+    Install PostgreSQL from postgresql.org.
 
-    Open pgAdmin or psql in your terminal.
+    Create the database via psql or pgAdmin:
+    SQL
 
-    Create the database:
-
-SQL
-
-CREATE DATABASE track_it;
+    CREATE DATABASE track_it;
 
 Environment Variables
 
-Create a .env file in the root directory and add the following:
+Create a .env file in the root directory:
 Code snippet
 
 PORT=5000
@@ -88,15 +81,11 @@ DB_NAME=track_it
 DB_PORT=5432
 JWT_SECRET=your_super_secure_secret_here
 
-    Note: > - Replace your_db_password with your PostgreSQL password.
-
-        Replace JWT_SECRET with a long, random string.
-
-        Never commit your .env file to GitHub.
+    Note: .env is ignored by git to keep your credentials safe.
 
 Database Setup
 
-Run the following SQL commands in your PostgreSQL environment to set up the necessary tables.
+Run these commands to initialize your tables:
 Users Table
 SQL
 
@@ -132,7 +121,7 @@ CREATE TABLE companies (
   updated_at TIMESTAMP
 );
 
-Onboarding Table
+Onboarding & Messages
 SQL
 
 CREATE TABLE onboarding (
@@ -145,9 +134,6 @@ CREATE TABLE onboarding (
   updated_at TIMESTAMP
 );
 
-Messages Table
-SQL
-
 CREATE TABLE messages (
   message_id SERIAL PRIMARY KEY,
   sender_id INT REFERENCES users(id) ON DELETE CASCADE,
@@ -157,83 +143,26 @@ CREATE TABLE messages (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-Run the Backend
-
-Start the development server:
-Bash
-
-npm run dev
-
-Expected output:
-Plaintext
-
-PostgreSQL connected successfully
-Track It Backend running on port 5000
-
 Available API Endpoints
 Authentication
 Method	Endpoint	Access	Description
 POST	/users/signup	Public	Create new admin user
 POST	/users/login	Public	Login user, returns JWT
-User Management (Admin Only)
+Company & Workflow
 Method	Endpoint	Access	Description
-GET	/users	Admin	List all users
-PUT	/users/:id	Admin	Update user info
-DELETE	/users/:id	Admin	Delete user
-Company Management
-Method	Endpoint	Access	Description
-POST	/companies	Admin	Add new company
 GET	/companies	Admin	List all companies
-PUT	/companies/:id	Admin	Update company
-DELETE	/companies/:id	Admin	Delete company
-Onboarding Workflow
-Method	Endpoint	Access	Description
-POST	/onboarding	Admin	Create onboarding record
-GET	/onboarding	Admin	List all onboarding records
-PUT	/onboarding/:id	Admin	Update status, assigned admin, or notes
-DELETE	/onboarding/:id	Admin	Delete onboarding record
-Messaging (Admins)
-Method	Endpoint	Access	Description
-POST	/messages	Admin	Send a message to another admin
-GET	/messages/:userId	Admin	Get messages for a user
-Security Considerations
-
-    Never commit .env to GitHub.
-
-    Use .gitignore to exclude node_modules/ and .env.
-
-    Hash passwords with bcrypt.
-
-    Protect routes with JWT (authMiddleware).
-
-    Admin-only routes use adminOnly middleware.
-
-Development Workflow
-
-    Start your PostgreSQL service.
-
-    Create your .env file with credentials.
-
-    Run npm install.
-
-    Start backend with npm run dev.
-
-    Test endpoints using Postman, Insomnia, or your frontend application.
-
-    Commit changes and push:
-
+POST	/companies	Admin	Add new company
+PUT	/onboarding/:id	Admin	Update status/notes
+GET	/messages/:id	Admin	Get user messages
+Run the Backend
 Bash
 
-git add .
-git commit -m "Update backend"
-git push
+npm run dev
 
 Tips for Collaborators
 
-    Always pull the latest code before making changes (git pull origin main).
+    Always pull the latest code before starting work.
 
-    Follow consistent naming conventions for database tables and fields.
+    Use consistent naming (snake_case) for database fields.
 
-    Write clear, descriptive commit messages.
-
-    Use nodemon for automatic server reload during development.
+    Write clear commit messages.
