@@ -39,9 +39,18 @@ Track It is a Node.js/Express backend for tracking company onboarding to SokoFun
 ---
 
 ## Clone the Repository
+```bash
+git clone [https://github.com/davy-mgr/track-it-backend.git](https://github.com/davy-mgr/track-it-backend.git)
+cd track-it-backend
 
-Install Dependencies
-Bash
+```
+
+----------
+
+## Install Dependencies
+
+
+'''bash
 
 npm install
 
