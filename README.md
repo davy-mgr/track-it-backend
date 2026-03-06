@@ -1,6 +1,6 @@
 # Track It Backend
 
-**Track It** is a Node.js/Express backend for tracking company onboarding to SokoFund. This backend includes:
+**Track It** is a Node.js/Express backend for tracking company onboarding to SokoFund. Features include:
 
 - User authentication (JWT, admin-only access)
 - Company management (CRUD)
@@ -14,15 +14,16 @@
 ## Table of Contents
 
 1. [Prerequisites](#prerequisites)
-2. [Clone the repository](#clone-the-repository)
-3. [Install dependencies](#install-dependencies)
-4. [Set up PostgreSQL](#set-up-postgresql)
-5. [Environment variables](#environment-variables)
-6. [Database setup](#database-setup)
-7. [Run the backend](#run-the-backend)
-8. [Available API endpoints](#available-api-endpoints)
-9. [Security considerations](#security-considerations)
-10. [Development workflow](#development-workflow)
+2. [Clone the Repository](#clone-the-repository)
+3. [Install Dependencies](#install-dependencies)
+4. [Set Up PostgreSQL](#set-up-postgresql)
+5. [Environment Variables](#environment-variables)
+6. [Database Setup](#database-setup)
+7. [Run the Backend](#run-the-backend)
+8. [Available API Endpoints](#available-api-endpoints)
+9. [Security Considerations](#security-considerations)
+10. [Development Workflow](#development-workflow)
+11. [Tips for Collaborators](#tips-for-collaborators)
 
 ---
 
@@ -33,19 +34,19 @@ Before starting, ensure you have installed:
 - Node.js (v18+ recommended)
 - npm (comes with Node.js)
 - PostgreSQL (v14+ recommended)
-- Optional: Postman or Insomnia for testing APIs
+- Optional: Postman or Insomnia for API testing
 
 ---
 
-## Clone the repository
+## Clone the Repository
 
 ```bash
 git clone https://github.com/davy-mgr/track-it-backend.git
 cd track-it-backend
-Install dependencies
+Install Dependencies
 npm install
 
-Installs required packages including:
+Installs the following packages:
 
 express → Web framework
 
@@ -59,19 +60,19 @@ dotenv → Environment variable management
 
 nodemon → Development auto-reload
 
-Set up PostgreSQL
+Set Up PostgreSQL
 
-Install PostgreSQL: https://www.postgresql.org/download/
+Install PostgreSQL from https://www.postgresql.org/download/
 
-Open pgAdmin or psql
+Open pgAdmin or psql.
 
 Create a database:
 
 CREATE DATABASE track_it;
 
-Create tables:
+Create the required tables:
 
--- Users
+-- Users table
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   first_name VARCHAR(50),
@@ -86,7 +87,7 @@ CREATE TABLE users (
   updated_at TIMESTAMP
 );
 
--- Companies
+-- Companies table
 CREATE TABLE companies (
   id SERIAL PRIMARY KEY,
   company_name VARCHAR(100) NOT NULL,
@@ -102,7 +103,7 @@ CREATE TABLE companies (
   updated_at TIMESTAMP
 );
 
--- Onboarding
+-- Onboarding table
 CREATE TABLE onboarding (
   onboarding_id SERIAL PRIMARY KEY,
   company_id INT REFERENCES companies(id) ON DELETE CASCADE,
@@ -113,7 +114,7 @@ CREATE TABLE onboarding (
   updated_at TIMESTAMP
 );
 
--- Messaging
+-- Messages table
 CREATE TABLE messages (
   message_id SERIAL PRIMARY KEY,
   sender_id INT REFERENCES users(id) ON DELETE CASCADE,
@@ -122,7 +123,7 @@ CREATE TABLE messages (
   read BOOLEAN DEFAULT false,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-Environment variables
+Environment Variables
 
 Create a .env file in the root directory:
 
@@ -134,28 +135,32 @@ DB_NAME=track_it
 DB_PORT=5432
 JWT_SECRET=your_super_secure_secret_here
 
-Replace your_db_password with your PostgreSQL password
+Notes:
 
-Replace JWT_SECRET with a long, random secret for JWT
+Replace your_db_password with your PostgreSQL password.
 
-Run the backend
+Replace JWT_SECRET with a long, random string (used for JWT authentication).
+
+.env is never committed to GitHub for security.
+
+Run the Backend
 
 For development with auto-reload:
 
 npm run dev
 
-You should see:
+Expected output:
 
 PostgreSQL connected successfully
 Track It Backend running on port 5000
-Available API endpoints
+Available API Endpoints
 Authentication
 Method	Endpoint	Access	Description
 POST	/users/signup	Public	Create new admin user
 POST	/users/login	Public	Login user, returns JWT
-User Management (Admin only)
+User Management (Admin Only)
 Method	Endpoint	Access	Description
-GET	/users	Admin	Get all users
+GET	/users	Admin	List all users
 PUT	/users/:id	Admin	Update user info
 DELETE	/users/:id	Admin	Delete user
 Company Management
@@ -174,7 +179,7 @@ Messaging (Admins)
 Method	Endpoint	Access	Description
 POST	/messages	Admin	Send a message to another admin
 GET	/messages/:userId	Admin	Get messages for a user
-Security considerations
+Security Considerations
 
 Never commit .env to GitHub
 
@@ -186,19 +191,19 @@ Protect routes with JWT (authMiddleware)
 
 Admin-only routes use adminOnly middleware
 
-Development workflow
+Development Workflow
 
 Start PostgreSQL service
 
-Create .env and fill in credentials
+Create .env with credentials
 
 Run npm install
 
 Start backend: npm run dev
 
-Test endpoints via Postman or frontend
+Test endpoints using Postman, Insomnia, or frontend
 
-Commit changes and push to GitHub:
+Commit changes and push:
 
 git add .
 git commit -m "Update backend"
