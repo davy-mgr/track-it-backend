@@ -1,10 +1,12 @@
 # Track It Backend
 
-**Track It** is a Node.js/Express backend for tracking company onboarding to SokoFund. Features include:
+Track It is a Node.js/Express backend for tracking company onboarding to SokoFund.
+
+## Features
 
 - User authentication (JWT, admin-only access)
 - Company management (CRUD)
-- Onboarding workflow tracking (`unstarted`, `pending`, `on hold`, `done`)
+- Onboarding workflow tracking (unstarted, pending, on hold, done)
 - Messaging between admins
 - Admin-only account management
 - PostgreSQL database integration
@@ -29,11 +31,9 @@
 
 ## Prerequisites
 
-Before starting, ensure you have installed:
-
-- Node.js (v18+ recommended)
+- Node.js v18 or higher
 - npm (comes with Node.js)
-- PostgreSQL (v14+ recommended)
+- PostgreSQL v14 or higher
 - Optional: Postman or Insomnia for API testing
 
 ---
@@ -46,19 +46,17 @@ cd track-it-backend
 Install Dependencies
 npm install
 
-Installs the following packages:
+express: Web framework
 
-express → Web framework
+pg: PostgreSQL client
 
-pg → PostgreSQL client
+bcrypt: Password hashing
 
-bcrypt → Password hashing
+jsonwebtoken: JWT authentication
 
-jsonwebtoken → JWT authentication
+dotenv: Environment variable management
 
-dotenv → Environment variable management
-
-nodemon → Development auto-reload
+nodemon: Development auto-reload
 
 Set Up PostgreSQL
 
@@ -66,13 +64,29 @@ Install PostgreSQL from https://www.postgresql.org/download/
 
 Open pgAdmin or psql.
 
-Create a database:
+Create the database:
 
 CREATE DATABASE track_it;
+Environment Variables
 
-Create the required tables:
+Create a .env file in the root directory:
 
--- Users table
+PORT=5000
+DB_USER=postgres
+DB_PASSWORD=your_db_password
+DB_HOST=localhost
+DB_NAME=track_it
+DB_PORT=5432
+JWT_SECRET=your_super_secure_secret_here
+
+Replace your_db_password with your PostgreSQL password
+
+Replace JWT_SECRET with a long, random string
+
+.env is never committed to GitHub
+
+Database Setup
+Users Table
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   first_name VARCHAR(50),
@@ -86,8 +100,7 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP
 );
-
--- Companies table
+Companies Table
 CREATE TABLE companies (
   id SERIAL PRIMARY KEY,
   company_name VARCHAR(100) NOT NULL,
@@ -102,8 +115,7 @@ CREATE TABLE companies (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP
 );
-
--- Onboarding table
+Onboarding Table
 CREATE TABLE onboarding (
   onboarding_id SERIAL PRIMARY KEY,
   company_id INT REFERENCES companies(id) ON DELETE CASCADE,
@@ -113,8 +125,7 @@ CREATE TABLE onboarding (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP
 );
-
--- Messages table
+Messages Table
 CREATE TABLE messages (
   message_id SERIAL PRIMARY KEY,
   sender_id INT REFERENCES users(id) ON DELETE CASCADE,
@@ -123,30 +134,7 @@ CREATE TABLE messages (
   read BOOLEAN DEFAULT false,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-Environment Variables
-
-Create a .env file in the root directory:
-
-PORT=5000
-DB_USER=postgres
-DB_PASSWORD=your_db_password
-DB_HOST=localhost
-DB_NAME=track_it
-DB_PORT=5432
-JWT_SECRET=your_super_secure_secret_here
-
-Notes:
-
-Replace your_db_password with your PostgreSQL password.
-
-Replace JWT_SECRET with a long, random string (used for JWT authentication).
-
-.env is never committed to GitHub for security.
-
 Run the Backend
-
-For development with auto-reload:
-
 npm run dev
 
 Expected output:
@@ -173,7 +161,7 @@ Onboarding Workflow
 Method	Endpoint	Access	Description
 POST	/onboarding	Admin	Create onboarding record
 GET	/onboarding	Admin	List all onboarding records
-PUT	/onboarding/:id	Admin	Update status/assigned admin/notes
+PUT	/onboarding/:id	Admin	Update status, assigned admin, or notes
 DELETE	/onboarding/:id	Admin	Delete onboarding record
 Messaging (Admins)
 Method	Endpoint	Access	Description
@@ -199,7 +187,7 @@ Create .env with credentials
 
 Run npm install
 
-Start backend: npm run dev
+Start backend with npm run dev
 
 Test endpoints using Postman, Insomnia, or frontend
 
@@ -208,3 +196,12 @@ Commit changes and push:
 git add .
 git commit -m "Update backend"
 git push
+Tips for Collaborators
+
+Always pull the latest code before making changes
+
+Follow consistent naming conventions for database tables and fields
+
+Write clear commit messages
+
+Use nodemon for automatic server reload during development
