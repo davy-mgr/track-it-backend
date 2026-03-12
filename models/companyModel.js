@@ -1,6 +1,5 @@
 const db = require('../config/db');
 
-// Create a new company
 const createCompany = async ({
   company_name,
   industry,
@@ -10,7 +9,7 @@ const createCompany = async ({
   contact_name,
   contact_email,
   contact_phone,
-  description // NEW: description field
+  description 
 }) => {
   const result = await db.query(
     `INSERT INTO companies
@@ -22,7 +21,6 @@ const createCompany = async ({
   return result.rows[0];
 };
 
-// Fetch all companies
 const fetchAllCompanies = async () => {
   const result = await db.query(
     `SELECT id, company_name, industry, country, company_size, website, contact_name, contact_email, contact_phone, description, created_at
@@ -31,13 +29,11 @@ const fetchAllCompanies = async () => {
   return result.rows;
 };
 
-// Fetch single company by id
 const fetchCompanyById = async (id) => {
   const result = await db.query(`SELECT * FROM companies WHERE id = $1`, [id]);
   return result.rows[0];
 };
 
-// Update a company (any attribute, including description)
 const updateCompany = async (id, data) => {
   const {
     company_name,
@@ -62,7 +58,6 @@ const updateCompany = async (id, data) => {
   return result.rows[0];
 };
 
-// Delete a company
 const deleteCompany = async (id) => {
   const result = await db.query(`DELETE FROM companies WHERE id=$1 RETURNING *`, [id]);
   return result.rows[0];

@@ -1,7 +1,6 @@
 const db = require('../config/db');
 const bcrypt = require('bcrypt');
 
-// Create a new user
 const createUser = async ({ first_name, last_name, email, phone, position, username, password, role }) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -16,7 +15,6 @@ const createUser = async ({ first_name, last_name, email, phone, position, usern
   return result.rows[0];
 };
 
-// Get all users
 const getAllUsers = async () => {
   const result = await db.query(
     `SELECT id, first_name, last_name, email, phone, position, username, role, created_at 
@@ -27,13 +25,11 @@ const getAllUsers = async () => {
   return result.rows;
 };
 
-// Get user by email
 const getUserByEmail = async (email) => {
   const result = await db.query(`SELECT * FROM users WHERE email=$1`, [email]);
   return result.rows[0];
 };
 
-// Get user by ID
 const getUserById = async (id) => {
   const result = await db.query(
     `SELECT id, first_name, last_name, email, phone, position, username, role, created_at 
@@ -44,7 +40,6 @@ const getUserById = async (id) => {
   return result.rows[0];
 };
 
-// Get unique user positions
 const getUserPositions = async () => {
   const result = await db.query(
     `SELECT DISTINCT position 
@@ -56,7 +51,6 @@ const getUserPositions = async () => {
   return result.rows;
 };
 
-// Update user
 const updateUser = async (id, data) => {
   const { first_name, last_name, email, phone, position, username, password, role } = data;
 
@@ -81,7 +75,6 @@ const updateUser = async (id, data) => {
   return result.rows[0];
 };
 
-// Delete user
 const deleteUser = async (id) => {
   const result = await db.query(
     `DELETE FROM users WHERE id=$1 RETURNING id, first_name, last_name, email`,

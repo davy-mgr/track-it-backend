@@ -5,7 +5,6 @@ const {
   fetchOnboardingById
 } = require('../models/onboardingModel');
 
-// Create new onboarding record
 const addOnboarding = async (req, res) => {
   try {
     const record = await createOnboarding(req.body);
@@ -16,7 +15,6 @@ const addOnboarding = async (req, res) => {
   }
 };
 
-// Update existing onboarding record
 const editOnboarding = async (req, res) => {
   try {
     const record = await updateOnboarding(req.params.id, req.body);
@@ -28,7 +26,6 @@ const editOnboarding = async (req, res) => {
   }
 };
 
-// Fetch dashboard view
 const getDashboard = async (req, res) => {
   try {
     const dashboard = await fetchDashboard();
@@ -39,7 +36,6 @@ const getDashboard = async (req, res) => {
   }
 };
 
-// Get single onboarding by ID
 const getOnboardingById = async (req, res) => {
   try {
     const record = await fetchOnboardingById(req.params.id);

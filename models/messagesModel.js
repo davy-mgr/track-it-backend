@@ -1,6 +1,5 @@
 const db = require('../config/db');
 
-// Create a new message
 const createMessage = async ({ sender_id, receiver_id, content }) => {
   const result = await db.query(
     `INSERT INTO messages (sender_id, receiver_id, content, created_at, read_status)
@@ -11,7 +10,6 @@ const createMessage = async ({ sender_id, receiver_id, content }) => {
   return result.rows[0];
 };
 
-// Fetch messages for a user (all conversations)
 const fetchMessagesForUser = async (user_id) => {
   const result = await db.query(
     `SELECT m.id, m.sender_id, m.receiver_id, m.content, m.created_at, m.read_status,
@@ -26,7 +24,6 @@ const fetchMessagesForUser = async (user_id) => {
   return result.rows;
 };
 
-// Mark message as read
 const markAsRead = async (id) => {
   const result = await db.query(
     `UPDATE messages SET read_status = true WHERE id = $1 RETURNING *`,

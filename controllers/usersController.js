@@ -11,7 +11,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
-// Signup new admin
 const signup = async (req, res) => {
   try {
     const user = await createUser(req.body);
@@ -23,7 +22,6 @@ const signup = async (req, res) => {
 };
 
 
-// Login user
 const login = async (req, res) => {
   try {
 
@@ -62,7 +60,6 @@ const login = async (req, res) => {
 };
 
 
-// Get all users
 const fetchUsers = async (req, res) => {
   try {
     const users = await getAllUsers();
@@ -74,7 +71,6 @@ const fetchUsers = async (req, res) => {
 };
 
 
-// Get user positions
 const fetchPositions = async (req, res) => {
   try {
     const positions = await getUserPositions();
@@ -86,7 +82,6 @@ const fetchPositions = async (req, res) => {
 };
 
 
-// Update user
 const editUser = async (req, res) => {
   try {
 
@@ -104,7 +99,6 @@ const editUser = async (req, res) => {
 };
 
 
-// Delete user
 const removeUser = async (req, res) => {
   try {
 

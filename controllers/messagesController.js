@@ -1,6 +1,5 @@
 const { createMessage, fetchMessagesForUser, markAsRead } = require('../models/messagesModel');
 
-// Send a new message
 const sendMessage = async (req, res) => {
   try {
     const { receiver_id, content } = req.body;
@@ -13,7 +12,6 @@ const sendMessage = async (req, res) => {
   }
 };
 
-// Get all messages for logged-in user
 const getMessages = async (req, res) => {
   try {
     const user_id = req.user.id;
@@ -25,7 +23,6 @@ const getMessages = async (req, res) => {
   }
 };
 
-// Mark a message as read
 const readMessage = async (req, res) => {
   try {
     const message = await markAsRead(req.params.id);

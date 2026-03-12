@@ -8,7 +8,6 @@ const {
 
 const db = require('../config/db');
 
-// Create a new company
 const addCompany = async (req, res) => {
   try {
     const company = await createCompany(req.body);
@@ -19,7 +18,6 @@ const addCompany = async (req, res) => {
   }
 };
 
-// Get all companies
 const getCompanies = async (req, res) => {
   try {
     const companies = await fetchAllCompanies();
@@ -30,7 +28,6 @@ const getCompanies = async (req, res) => {
   }
 };
 
-// Get a single company by ID
 const getCompanyById = async (req, res) => {
   try {
     const company = await fetchCompanyById(req.params.id);
@@ -42,7 +39,6 @@ const getCompanyById = async (req, res) => {
   }
 };
 
-// Update a company
 const editCompany = async (req, res) => {
   try {
     const company = await updateCompany(req.params.id, req.body);
@@ -54,7 +50,6 @@ const editCompany = async (req, res) => {
   }
 };
 
-// Delete a company
 const removeCompany = async (req, res) => {
   try {
     const company = await deleteCompany(req.params.id);

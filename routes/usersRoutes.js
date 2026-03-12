@@ -13,12 +13,10 @@ const {
 const { protect, adminOnly } = require('../middleware/authMiddleware');
 
 
-// Auth routes
 router.post('/signup', signup);
 router.post('/login', login);
 
 
-// Admin user management
 router.get('/', protect, adminOnly, fetchUsers);
 router.get('/positions', protect, adminOnly, fetchPositions);
 

@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 
-// Verify JWT token
 const protect = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1]; // Bearer <token>
   if (!token) return res.status(401).json({ error: 'No token, authorization denied' });
@@ -14,7 +13,6 @@ const protect = (req, res, next) => {
   }
 };
 
-// Admin-only access
 const adminOnly = (req, res, next) => {
   if (req.user.role !== 'admin') {
     return res.status(403).json({ error: 'Access denied, admin only' });
