@@ -66,3 +66,5 @@ GET http://localhost:5000/onboarding
 
 ### 6️⃣ Get dashboard
 GET http://localhost:5000/dashboard
+
+
